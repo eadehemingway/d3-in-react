@@ -2,9 +2,7 @@ import React from 'react';
 import * as d3 from 'd3';
 
 export class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+  state = {
       data: [
         { id: 1, height: 90, liquidHeight: 35, color: '#FDA7DF' },
         { id: 2, height: 100, liquidHeight: 40, color: '#54a0ff' },
@@ -15,7 +13,7 @@ export class App extends React.Component {
       ],
       vaseY: 300
     };
-  }
+
   componentDidMount() {
     const { data, vaseY } = this.state;
     const svgWidth = 700;
@@ -46,14 +44,15 @@ export class App extends React.Component {
       .attr('fill', 'none')
       .attr('stroke', d => d.color);
 
-    vaseGroups
+      vaseGroups
       .append('rect')
       .attr('class', 'liquid')
       .attr('width', vaseWidth)
-      .attr('height', d => d.liquidHeight)
       .attr('x', (_, i) => i * padding + margin)
-      .attr('y', d => vaseY - d.liquidHeight)
+      .attr('y', vaseY)
       .attr('fill', d => d.color);
+      
+      this.redrawLiquid()
   }
 
   componentDidUpdate() {
